@@ -15,7 +15,8 @@ dependencies = [
     "mypy (>=1.18.2,<2.0.0)",
     "python-dateutil (>=2.9.0.post0,<3.0.0)",
     "typer (>=0.19.2,<0.20.0)",
-    "dateparser (>=1.2.2,<2.0.0)"
+    "dateparser (>=1.2.2,<2.0.0)",
+    "email-validator (>=2.3.0,<3.0.0)"
 ]
 
 [tool.poetry]
