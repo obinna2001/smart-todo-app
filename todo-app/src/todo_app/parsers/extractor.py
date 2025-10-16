@@ -7,7 +7,7 @@ from typing import Tuple, Union
 from email_validator import ValidatedEmail # type: ignore
 
 from todo_app.utilis.utils import normalize_duration_string, ensure_future
-from todo_app.parsers.validator import valid_email
+from todo_app.parsers.validator import valid_email, valid_priority_level
 
 # regex pattern to extract date from task description
 DATE_PATTERN = re.compile(
@@ -85,6 +85,12 @@ def extract_priority_level(task_description: str) -> Tuple[bool, str]:
     # strip priority level of empty space
     task_priority = priority_matches[0].strip()
     
+    # validate priority level: high, low and mild
+    priority_validate = valid_priority_level(task_priority)
+
+    if not priority_validate:
+        err = 'Invalid Priority Level. Priority Level are high, mild and low'
+        return False, err
     # convert priority level to title case
     task_priority = task_priority.title()
     
@@ -132,7 +138,7 @@ def extract_email(task_description: str) -> Tuple[bool, str]:
     
     # check if email is found in task description
     if not email_matches:
-        err = 'Email not found. '
+        err = 'Email not found.'
         return False, err
     
     # extract and strip email of whitespaces
