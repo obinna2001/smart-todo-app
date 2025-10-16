@@ -43,6 +43,8 @@ TAG_PATTERN = re.compile(r"@([^#]+?)#", re.IGNORECASE)
 # regex pattern to extract email from task description
 EMAIL_PATTERN = re.compile(r"assigned:([^\s]+)", re.IGNORECASE)
 
+# regex pattern to extract task message from task description
+MESSAGE_PATTERN = re.compile(r"^(.*?)@")
 
 def extract_task(task_description: str) -> Tuple[bool, str]:
     """Extract task priority level from task descriptions.
@@ -53,7 +55,7 @@ def extract_task(task_description: str) -> Tuple[bool, str]:
             bool: True, False
             err = error message
     """
-    task_match = re.match(r"^(.*?)@", task_description)
+    task_match = MESSAGE_PATTERN.search(task_description)
     
     # check if task if present in task descritption
     if not task_match:
