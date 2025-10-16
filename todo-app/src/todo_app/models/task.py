@@ -29,25 +29,32 @@ class TodoApp:
             return task_tag
         
         if not email_status:
-            print(task_email)
-            task_email = ""
+            if task_email == 'Email not found.':
+                task_email = ""
+
+            elif task_email == "Invalid Email address":
+                raise task_email
         
         # create a unique task id
         task_id = generate_taskID(self.user_input)
 
         task = {
             'ID': task_id,
+            'Time': str(task_time),
             'Description': task_description,
             'Priority': task_priority,
-            'tag': task_tag,
-            'email': task_email
+            'Tag': task_tag,
+            'Email': task_email
         }
 
         # save task to todo-app.json
-        upload_task(task)
+        return upload_task(task)
+    
+    def delete_task():
+        pass
 
 
 if __name__ == '__main__':
-    sample = "Buy groceries @shopping #high due:1 february assigned:okeyobinna2001@gmail.com"
+    sample = "study bible and pray @worship #high due:9pm assigned:okeyobinna2001@gmail.com"
     app = TodoApp(sample)
-    app.add_task()
+    print(app.add_task())

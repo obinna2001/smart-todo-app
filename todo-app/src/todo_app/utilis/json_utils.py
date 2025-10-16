@@ -16,3 +16,6 @@ def upload_task(data: dict) -> None:
     with open(JSON_DB_PATH, 'w') as db:
         json.dump(todo_records, db, indent=4)
 
+    return f"✅ Task added: {data['Description']}\n 🏷️ Tags: {data['Tag']} |⚡ Priority: {data['Priority']} | 🕒 Due: {data['Time']}"
+
+ 
