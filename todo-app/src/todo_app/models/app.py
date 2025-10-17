@@ -188,12 +188,71 @@ class TodoApp:
         """
 
         status, result = keyword_search(keywords)
-                    
+        # if keyword search not successful return error message
+        if not status:
+            return result
 
+        # keyword search successful return List of task 
+        return result
+                    
+    def  task_tag_filter(self, tag_filters_list: List[str]) ->  Union[str, List[Any]]:
+        """ Search and extract task from todo-app.json based on tag filters.
+            args:
+                tag_list: List containing tag filters example ['shopping', 'religion']
+            return:
+                (bool, list | str):
+                    - (True, search_result| error message)
+        """
+
+        status, result = tag_filter(tag_filters_list)
+
+        # if tag filter not successful return error message
+        if not status:
+            return result
+
+        # tag filter successful return List of task 
+        return result
+    
+    def  task_time_filter(self, time_filters_list: List[str]) ->  Union[str, List[Any]]:
+        """ Search and extract task from todo-app.json based on time filters.
+            args:
+                tag_list: List containing time filters example ['yesterday', '2 weeks']
+            return:
+                (bool, list | str):
+                    - (True, search_result| error message)
+        """
+
+        status, result = time_filter(time_filters_list)
+
+        # if time filter not successful return error message
+        if not status:
+            return result
+
+        # time filter successful return List of task 
+        return result
+
+    def  task_priority_filter(self, priority_filters_list: List[str]) ->  Union[str, List[Any]]:
+        """ Search and extract task from todo-app.json based on priority filters.
+            args:
+                tag_list: List containing priority filters example ['high', 'mild', 'low']
+            return:
+                (bool, list | str):
+                    - (True, search_result| error message)
+        """
+
+        status, result = priority_filter(priority_filters_list)
+
+        # if priority filter not successful return error message
+        if not status:
+            return result
+
+        # priority filter successful return List of task 
+        return result
+    
 
 if __name__ == '__main__':
     """status: complete, inprogress and incomplete"""
     """update format: task id value example '7d588660 buy food', '9d30d4ab high', '9d30d4ab 4pm', '4253d1b5 incomplete'"""
-    sample = "study bible and pray @worship #high due:2pm assigned:johnobinna700@gmail.com"
+    sample = "buy groceries @shopping #high due:8pm assigned:okeyobinna2001@gmail.com"
     app = TodoApp(sample)
-    print(app.add_task(['all']))
+    print(app.add_task())
