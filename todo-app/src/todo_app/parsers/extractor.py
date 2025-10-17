@@ -1,12 +1,8 @@
 import re
-from dateutil.parser import parse
-from dateutil.parser import ParserError
-from datetime import datetime, timedelta
-import dateparser # type: ignore
 from typing import Tuple, Union
-from email_validator import ValidatedEmail # type: ignore
+from datetime import datetime
 
-from todo_app.utilis.utils import normalize_duration_string, ensure_future
+from todo_app.utilis.utils import convert_datestring
 from todo_app.parsers.validator import valid_email, valid_priority_level
 
 # regex pattern to extract date from task description
@@ -25,12 +21,6 @@ DATE_PATTERN = re.compile(
     r'(?:\b\d{4}/\d{1,2}/\d{1,2}\b)|'  # 2026/02/23
     r'(?:\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s*\d{4})?\b)'  # Feb 1st, 2025
     r')\b',
-    re.IGNORECASE
-)
-
-# regex pattern to extract relative time units
-DURATION_PATTERN = re.compile(
-    r'(?<!\bin\s)(\d+)\s*(minute|minutes|hour|hours|day|days|week|weeks|month|months|year|years)\b',
     re.IGNORECASE
 )
 
@@ -149,13 +139,13 @@ def extract_email(task_description: str) -> Tuple[bool, str]:
     # check if email is valid
     valid_mail = valid_email(email)
 
-    if isinstance(valid_mail, ValidatedEmail):
-        email = valid_mail.email  # convert valid_mail to str
-        return True, email
-    
-    elif isinstance(valid_mail, str):
+    if isinstance(valid_mail, str):
         err = valid_mail
         return False, err
+
+    email = valid_mail.email  # convert valid_mail to str
+    return True, email
+
 
 def extract_date(task_description: str) -> Union[Tuple[bool, datetime], Tuple[bool, str]]:
     """Extract valid date like format from task description, convert it to a datetime object and format it into a defined string output.
@@ -166,77 +156,40 @@ def extract_date(task_description: str) -> Union[Tuple[bool, datetime], Tuple[bo
            bool: True, False
            err: error message
     """
-    # current time
-    current_time = datetime.now()
-
     # extract valid date-like string from task_description
     date_matches = DATE_PATTERN.findall(task_description)
     
     # check if date match is found
     if not date_matches:
-        err = "Invalid or No date found in task description"
+        err = "🚫 Invalid or No date found in task description"
         return False, err
     
     # extract date string
     date_string = date_matches[0].strip()
 
-    # normalize date string
-    normalised_date = normalize_duration_string(date_string)
-
     # convert date_string to datetime
-    # Check for phrases like "2 hours", "in 30 minutes"
-    match = DURATION_PATTERN.search(normalised_date)
+    status, result = convert_datestring(date_string)
     
-    # convert to date time is normalised_date is like 2 hour, 2 minutes, 1 year etc
-    if match:
-        num, unit = match.groups()  # unpacking value and time unit from match eg num = 1, unit = hour
-        num = int(num)  # convert value (num) to integer
-
-        # map to timedelta
-        unit = unit.lower()
-        if "min" in unit:
-            delta = timedelta(minutes=num)
-        elif "hour" in unit:
-            delta = timedelta(hours=num)
-        elif "day" in unit:
-            delta = timedelta(days=num)
-        elif "week" in unit:
-            delta = timedelta(weeks=num)
-        elif "month" in unit:
-            delta = timedelta(days=30 * num)
-        elif "year" in unit:
-            delta = timedelta(days=365 * num)
-        else:
-            delta = timedelta()
-        
-        # calculate date/time
-        date = current_time + delta
-
-        # return True, date
-        return True, date
+    # failed conversion
+    if not status:
+        return status, result
     
-    # convert other form of task description time
-    try:
-        convert_date = parse(date_string)
+    # conversion successful
+    return status, result
 
-    except (ParserError, ValueError):
-        try:
-            convert_date = dateparser.parse(
-                date_string, 
-                settings={
-                    "PREFER_DATES_FROM": "future", 
-                    "RELATIVE_BASE": current_time,
-                    "RETURN_AS_TIMEZONE_AWARE": False,
-                }
-            )
+def extract_taskid(data: str) ->  str:
+    """Extract task id from a user task description
+        args:
+            data: user task description
+        return:
+            str: extracted task id if found else an empty string
+    """
+    # extract and validate task id
+    id_match = re.match(r'^(.{8})', data)
 
-            if convert_date is None:
-                err = f'Unable to convert {date_string} to datetime object'
-                return False, err
-            
-        except Exception as e:
-            err = str(e)
-            return False, err
+    if id_match:
+        task_id = id_match.group(1).strip()
+        return task_id
     
-    # date return format year-month-day
-    return True, ensure_future(convert_date)
+    return ''
+
