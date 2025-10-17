@@ -62,8 +62,6 @@ def upload_task(data: dict) -> List[Any]:
     
     return [dict]
 
-    # return f"✔️  Task added: {data['Description']}\n #️⃣  Task ID: {data['ID']} 🏷️ Tags: {data['Tag']} |⚡ Priority: {data['Priority']} | 🕒 Due: {data['Time']} | ⏳ Status: {data['Status']}"
-
 
 def delete_tasks(index: List[Union[int, str]]) -> str:
     """Delete one or more tasks based on index or task ID."""
