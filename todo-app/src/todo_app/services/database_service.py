@@ -54,7 +54,7 @@ def save_json(data: List[Dict[str, Any]]) -> None:
         json.dump(data, json_file, indent=4, ensure_ascii=False)
 
 
-def upload_task(data: dict) -> Tuple[bool, str, List[Dict]]:
+def upload_task(data: dict) -> Tuple[bool, str, List[Any]]:
     """Save a task to todo-app.json"""
     todo_records = read_json()
     todo_records.append(data)
@@ -62,7 +62,7 @@ def upload_task(data: dict) -> Tuple[bool, str, List[Dict]]:
         with open(JSON_DB_PATH, "w") as db:
             json.dump(todo_records, db, indent=4)
 
-        return True, "✔️ Task added" [data]
+        return True, "✔️  Task added", [data]
     
     except Exception as e:
         return False, str(e), []
@@ -133,7 +133,7 @@ def delete_tasks(index: List[Union[int, str]]) -> str:
 
 def display_tasks(
     index: List[Union[int, str]],
-) -> Union[Tuple[bool, str], Tuple[bool, List[Any]], Tuple[bool, str, List[Any]]]:
+) -> Tuple[bool, str, List[Any]]:
     """To display tasks in the todo app based on task id, task index or 'all'.
     args:
         index: List of task index, task id or all
@@ -148,7 +148,7 @@ def display_tasks(
     # check if todo_records is empty
     if not todo_records:
         err = "⛔ No record found - mermory is Empty"
-        return False, err
+        return False, err, []
 
     # initialize list to store extracted task and track task not found
     to_display: List[Dict[str, Any]] = []
@@ -169,8 +169,6 @@ def display_tasks(
     if any(item.strip().lower() == "all" for item in string_index):
         for task in todo_records:
             to_display.append(task)
-
-        return True, to_display
 
     # Handle task id based index
     for id in string_index:
@@ -193,10 +191,10 @@ def display_tasks(
         mssg = f"✔️  Found {len(to_display)} task(s), but {not_found} not found ⚠️."
         return True, mssg, to_display
     elif to_display:
-        return True, to_display
+        return True, "", to_display
     else:
         err = f"❌ No matching tasks found for {index}."
-        return False, err
+        return False, err, []
 
 
 def update_description(update_values: str) -> Tuple[bool, str]:

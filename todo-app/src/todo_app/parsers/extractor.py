@@ -37,8 +37,11 @@ EMAIL_PATTERN = re.compile(r"assigned:([^\s]+)", re.IGNORECASE)
 MESSAGE_PATTERN = re.compile(r"^(.*?)@")
 
 
-def extract_task(task_description: str) -> Tuple[bool, str]:
-    """Extract task priority level from task descriptions.
+class Extractor:
+
+@staticmethod 
+def extract_task(task: str) -> Tuple[bool, str]:
+    """Extract task description from task.
     args:
         task_description: User task descriptin contain a message eg buy groceries, watch man utd vs liverpool game
     return:
@@ -46,18 +49,19 @@ def extract_task(task_description: str) -> Tuple[bool, str]:
         bool: True, False
         err = error message
     """
-    task_match = MESSAGE_PATTERN.search(task_description)
+    task_match = MESSAGE_PATTERN.match(task)
+
+    task = task_match.group(1).strip().title()  # extract clean and normalize task
 
     # check if task if present in task descritption
-    if not task_match:
-        err = "Task not Found!"
+    if not task:
+        err = "Task description not Found!"
         return False, err
 
     # return task if found
-    task = task_match.group(1).strip().title()  # extract clean and normalize task
     return True, task
 
-
+@staticmethod
 def extract_priority_level(task_description: str) -> Tuple[bool, str]:
     """Extract task priority level from task descriptions.
     args:
@@ -70,13 +74,13 @@ def extract_priority_level(task_description: str) -> Tuple[bool, str]:
     # extract priority level from task description
     priority_matches = PRIORITY_PATTERN.findall(task_description)
 
-    # return None is priority level not found
-    if not priority_matches:
-        err = "Task Priority level not found!"
-        return False, err
-
     # strip priority level of empty space
     task_priority = priority_matches[0].strip()
+
+    # return None is priority level not found
+    if not task_priority:
+        err = "Task Priority level not found!"
+        return False, err
 
     # validate priority level: high, low and mild
     priority_validate = valid_priority_level(task_priority)
@@ -90,7 +94,7 @@ def extract_priority_level(task_description: str) -> Tuple[bool, str]:
     # return extracted priority level
     return True, task_priority
 
-
+@staticmethod
 def extract_tag(task_description: str) -> Tuple[bool, str]:
     """Extract task tag from task decsription.
     args:
@@ -117,7 +121,7 @@ def extract_tag(task_description: str) -> Tuple[bool, str]:
     # return extracted tag
     return True, tag
 
-
+@staticmethod
 def extract_email(task_description: str) -> Tuple[bool, str]:
     """Extract task email from task decsription.
     args:
@@ -149,7 +153,7 @@ def extract_email(task_description: str) -> Tuple[bool, str]:
     email = valid_mail.normalized  # convert valid_mail to str
     return True, email
 
-
+@staticmethod
 def extract_date(
     task_description: str,
 ) -> Union[Tuple[bool, datetime], Tuple[bool, str]]:
@@ -184,7 +188,7 @@ def extract_date(
         assert isinstance(result, datetime)
         return status, result
 
-
+@staticmethod
 def extract_taskid(data: str) -> str:
     """Extract task id from a user task description
     args:
