@@ -15,8 +15,9 @@ dist/
 .eggs/
 
 # ---- VS Code and IDE settings ----
-.vscode/
+.vscode/settings.json
 .idea/
+.vscode/
 
 # ---- Cache and analysis ----
 .pytest_cache/

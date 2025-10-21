@@ -1,62 +1,64 @@
 import re
-from email_validator import validate_email, EmailNotValidError, ValidatedEmail
+from email_validator import validate_email, EmailNotValidError, ValidatedEmail # type: ignore
 from typing import Union, Tuple
 
+class Validator:
+    """A class to validate different components of a todo task."""
 
-
-def valid_email(email_address: str) -> Union[ValidatedEmail, str]:
-    """check is an email address is valid.
+    @staticmethod
+    def valid_email(email_address: str) -> Union[ValidatedEmail, str]:
+        """check is an email address is valid.
         args:
             email_address: a potential email address in string format
-        return: 
+        return:
             email: a valid email address in ValidatedEmail datatype
             err: error message
-    """
-    try:
-        email = validate_email(email_address)
-        return email
-    except EmailNotValidError:
-        return '❌  Invalid Email address'
+        """
+        try:
+            email = validate_email(email_address, check_deliverability=True)
+            return email
+        except EmailNotValidError:
+            return "Invalid Email address"
     
-def valid_priority_level(priority: str) -> Tuple[bool, str]:
-    """Check if task priority level is a valid input.
-    args: 
-        priority: priority from user input.
-    return:
-        Tuple[bool, str]: 
-            - (True, success_message) if valid
-            - (False, error_message) if invalid
-    """
-    
-    priority_validator = re.compile(r"\b(high|low|mild)\b", re.IGNORECASE)
-    
-    # check if priority is high, low or mild
-    check = priority_validator.search(priority)
+    @staticmethod
+    def valid_priority_level(priority: str) -> Tuple[bool, str]:
+        """Check if task priority level is a valid input.
+        args:
+            priority: priority from user input.
+        return:
+            Tuple[bool, str]:
+                - (True, success_message) if valid
+                - (False, error_message) if invalid
+        """
 
-    if check:
-        mssg = '✔️  Priority level is valid'
-        return True, mssg    
-    else:
-        err = '❌  Invalid Priority Level. Priority Level are high, mild and low'
-        return False, err
+        priority_validator = re.compile(r"\b(high|low|mild)\b", re.IGNORECASE)
 
-def valid_status(status: str) -> Tuple[bool, str]:
-    """check if task status is a valid input.
-        args: 
+        # check if priority is high, low or mild
+        priority_match = priority_validator.search(priority)
+
+        # valid priority level
+        if priority_match:
+            return True, "Priority level is valid"
+
+        return False, "Invalid Priority Level. Priority Level are high, mild and low"
+
+    @staticmethod
+    def valid_status(status: str) -> Tuple[bool, str]:
+        """check if task status is a valid input.
+        args:
             status: task status from user input.
         return:
-            bool: True or False
-            mssg: success message
-            err: error message
-    """
-    status_validator = re.compile(r"\b(complete|inprogress|incomplete)\b", re.IGNORECASE)
-    
-    # check if priority is high, low or mild
-    check = status_validator.search(status)
+            Tuple[bool, str]:
+                - (True, success_message) if valid
+                - (False, error_message) if invalid
+        """
+        status_validator = re.compile(r"\b(complete|inprogress|incomplete)\b", re.IGNORECASE)
 
-    if check:
-        mssg = '✔️  Task Status is valid'
-        return True, mssg    
-    else:
-        err = '❌  Invalid Status. Status Incomplete, Inprogress and Complete'
-        return False, err
+        # check if priority is high, low or mild
+        check = status_validator.search(status)
+
+        # valid status level
+        if not check:
+            return False, "Invalid or No Task Status given. Status Incomplete, Inprogress and Complete"
+        
+        return True, "Valid Task Status"
