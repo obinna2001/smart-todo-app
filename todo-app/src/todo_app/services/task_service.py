@@ -125,7 +125,7 @@ class TaskService:
 
         # create a valid regex filter string from time_list and time filter
         print(converted_time)
-        filter_string = "|".join(converted_time)
+        filter_string = "|".join([f"^{time.split()[0]}" for time in converted_time])
         filter_pattern = re.compile(filter_string, re.IGNORECASE)
         print(filter_pattern)
 
@@ -168,7 +168,7 @@ class TaskService:
         for priority in priority_list:
             status, result = cls.validator.valid_priority_level(priority)
             if not status:
-                return status, f"{result}. {priority} is given", []  
+                return status, result, []  
 
         # create a valid regex filter string from priority_list and priority filter
         filter_string = "|".join(priority_list)
@@ -184,15 +184,10 @@ class TaskService:
                     filter_result.append(task)
 
             if not filter_result:
-                return False, f"No search result found for {priority_list}", []
+                return False, f"No search result found for {'; '.join(priority_list)}", []
 
             # return True and result if task is found
             return True, "", filter_result
 
         except Exception as e:
             return False, str(e), []
-
-
-if __name__ == "__main__":
-    task_app = TaskService()
-    print(task_app.time_filter(["", "2025-10-20", 'yesterday', '10am']))

@@ -39,3 +39,25 @@ def test_time_filter():
     assert message == ''
     assert isinstance(tasks, list)
     assert all(isinstance(task, dict) for task in tasks)
+
+def test_wrong_time_filter():
+    time_filters = ["1990-01-01", "2000-12-12"]
+    status, message, tasks = task_service.time_filter(time_filters)
+    assert status is False
+    assert message == f'No search result found for {time_filters}'
+    assert tasks == []
+
+def test_priority_filter():
+    priority_filters = ["high", "mild"]
+    status, message, tasks = task_service.priority_filter(priority_filters)
+    assert status is True
+    assert message == ''
+    assert isinstance(tasks, list)
+    assert all(isinstance(task, dict) for task in tasks)
+
+def test_wrong_priority_filter():
+    priority_filters = ["urgent", "critical"]
+    status, message, tasks = task_service.priority_filter(priority_filters)
+    assert status is False
+    assert message == 'Invalid Priority Level. Priority Level are high, mild and low'
+    assert tasks == []

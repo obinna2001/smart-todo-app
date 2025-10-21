@@ -32,7 +32,7 @@ class TodoApp:
             return time_status, task_time, []
 
         if not priority_status:
-            return time_status, task_priority, []
+            return priority_status, task_priority, []
 
         if not tag_status:
             return tag_status, task_tag, []
