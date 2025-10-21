@@ -51,30 +51,30 @@ def normalize_duration_string(date: str) -> str:
     return time
 
 
-def ensure_future(convert_date: datetime) -> datetime:
-    """Ensure that date is always in future time and not in past.
-    args:
-        convert_date: task description time in datetime datatype
-    return:
-        convert_date: processed convert_date
-    """
-    # initialise current time
-    now = datetime.now()
+# def ensure_future(convert_date: datetime) -> datetime:
+#     """Ensure that date is always in future time and not in past.
+#     args:
+#         convert_date: task description time in datetime datatype
+#     return:
+#         convert_date: processed convert_date
+#     """
+#     # initialise current time
+#     now = datetime.now()
 
-    if convert_date < now:
-        # If it's today but earlier, assume the date to betomorrow
-        if convert_date.date() == now.date():
-            convert_date += timedelta(days=1)
+#     if convert_date < now:
+#         # If it's today but earlier, assume the date to betomorrow
+#         if convert_date.date() == now.date():
+#             convert_date += timedelta(days=1)
 
-        # If it's a weekday or relative date that still landed in the past, increase it by a week
-        elif (now - convert_date).days < 7:
-            convert_date += timedelta(days=7)
+#         # If it's a weekday or relative date that still landed in the past, increase it by a week
+#         elif (now - convert_date).days < 7:
+#             convert_date += timedelta(days=7)
 
-        # if month is less than current month increase it by 1 year
-        elif now.month > convert_date.month:
-            convert_date += timedelta(days=365)
+#         # if month is less than current month increase it by 1 year
+#         elif now.month > convert_date.month:
+#             convert_date += timedelta(days=365)
 
-    return convert_date
+#     return convert_date
 
 
 def convert_datestring(input_date: str) -> Union[Tuple[bool, str], Tuple[bool, datetime]]:
@@ -142,15 +142,13 @@ def convert_datestring(input_date: str) -> Union[Tuple[bool, str], Tuple[bool, d
             )
 
             if convert_date is None:
-                err = f"❌  Unable to convert {input_date} to datetime object"
-                return False, err
+                return False, f"Unable to convert {input_date} to datetime object"
 
         except Exception as e:
-            err = str(e)
-            return False, err
+            return False, str(e)
 
     # date return format year-month-day
-    absolute_date: datetime = ensure_future(convert_date)
+    absolute_date: datetime = convert_date
     return True, absolute_date
 
 
