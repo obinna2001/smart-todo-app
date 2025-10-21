@@ -50,33 +50,6 @@ def normalize_duration_string(date: str) -> str:
 
     return time
 
-
-# def ensure_future(convert_date: datetime) -> datetime:
-#     """Ensure that date is always in future time and not in past.
-#     args:
-#         convert_date: task description time in datetime datatype
-#     return:
-#         convert_date: processed convert_date
-#     """
-#     # initialise current time
-#     now = datetime.now()
-
-#     if convert_date < now:
-#         # If it's today but earlier, assume the date to betomorrow
-#         if convert_date.date() == now.date():
-#             convert_date += timedelta(days=1)
-
-#         # If it's a weekday or relative date that still landed in the past, increase it by a week
-#         elif (now - convert_date).days < 7:
-#             convert_date += timedelta(days=7)
-
-#         # if month is less than current month increase it by 1 year
-#         elif now.month > convert_date.month:
-#             convert_date += timedelta(days=365)
-
-#     return convert_date
-
-
 def convert_datestring(input_date: str) -> Union[Tuple[bool, str], Tuple[bool, datetime]]:
     """convert a date string to datetime value.
     args:

@@ -530,13 +530,4 @@
         "Email": "",
         "Status": "Incomplete 🟩⬜⬜⬜⬜"
     },
-    {
-        "ID": "76487gtd",
-        "Time": "2024-06-15 14:30:00",
-        "Description": "Updated Test Task",
-        "Priority": "High",
-        "Tag": "WORK",
-        "Email": "johndoe789@gmail.com",
-        "Status": "Complete  🟩🟩🟩🟩🟩"
-    }
 ]

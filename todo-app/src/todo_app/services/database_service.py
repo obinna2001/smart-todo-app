@@ -496,9 +496,3 @@ class DatabaseService:
 
         # return success message
         return True, f"{task_id} Task Status update successful"
-
-
-# if __name__ == '__main__':
-#     db_service = DatabaseService()
-#     status, message, tasks = db_service.display_tasks(['ed8f905f'])
-#     print(tasks)
