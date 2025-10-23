@@ -152,3 +152,24 @@ def test_update_status():
     status, message = db_service.update_status(update_values)
     assert status is True
     assert message == f"{task_id} Task Status update successful"
+
+# def test_delete_task():
+#     task_id = ['76487gtd']
+#     message = db_service.delete_tasks(task_id)
+#     assert message == f'Deleted {len(task_id)} task(s) successfully.'
+
+# def test_delete_invalid_task():
+#     task_id = ['09dhf73g']
+#     message = db_service.delete_tasks(task_id)
+#     assert message == f"No matching tasks found for {task_id}."
+
+# def test_delete_mixed_tasks():
+#     task_id = ['09dhf73g', '76487gtd', "ed8f905f"]
+#     message = db_service.delete_tasks(task_id)
+#     assert message == f"Deleted 1 task(s), but {['09dhf73g', 'ed8f905f']} not found."
+
+# def test_delete_all_tasks():
+#     json_db = db_service.read_json()
+#     task_count = len(json_db)
+#     message = db_service.delete_tasks(['all'])
+#     assert message == f"Delete successful - all {task_count} task(s) cleared"
