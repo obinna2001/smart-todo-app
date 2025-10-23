@@ -46,7 +46,7 @@ class TodoApp:
 
         # create a unique task id and status
         task_id = generate_taskID(user_input)
-        status = "Incomplete 🟩⬜⬜⬜⬜"
+        status = "Incomplete"
 
         # create task
         task = {
@@ -62,16 +62,17 @@ class TodoApp:
         # save task to todo-app.json
         return self.db_service.upload_task(task)
 
-    def delete_task(self, index: List[Union[int, str]]) -> str:
-        """Delete one or more tasks based on index, task ID or 'all'.
+    def delete_task(self, index: List[str]) -> Tuple[bool, str]:
+        """Delete one or more tasks based on task ID or 'all'.
         args:
-            index: list of task index which are either valid task id, task index or 'all'
+            index: list of task index which are either valid task id or 'all'
         return:
-            status_message: The status message of deletion process
+            (bool, list | str):
+                - (True | False,  success message | error message)
         """
         return self.db_service.delete_tasks(index)
 
-    def display_task(self, index: List[Union[int, str]]) -> Tuple[bool, str, List[Any]]:
+    def display_task(self, index: List[str]) -> Tuple[bool, str, List[Any]]:
         """Delete one or more tasks based on index, task ID or 'all'.
         args:
             index: list of task index which are either valid task id, task index or 'all'
@@ -121,15 +122,15 @@ class TodoApp:
         """
         return self.db_service.update_priority(update_values)
 
-    def update_task_tag(self, update_values: str) -> Tuple[bool, str]:
-        """ "To update the tag of an existing task based on the task id.
-        args:
-            update_values: The new task values; format = task id task key task value. E.g '9d30d4ab school'
-        return:
-            (bool, list | str):
-                - (True | False,  success message | error message)
-        """
-        return self.db_service.update_tag(update_values)
+    # def update_task_tag(self, update_values: str) -> Tuple[bool, str]:
+    #     """ "To update the tag of an existing task based on the task id.
+    #     args:
+    #         update_values: The new task values; format = task id task key task value. E.g '9d30d4ab school'
+    #     return:
+    #         (bool, list | str):
+    #             - (True | False,  success message | error message)
+    #     """
+    #     return self.db_service.update_tag(update_values)
 
     def update_task_status(self, update_values: str) -> Tuple[bool, str]:
         """ "To update the status of an existing task based on the task id.

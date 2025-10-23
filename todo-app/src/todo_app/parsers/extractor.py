@@ -107,7 +107,7 @@ class Extractor:
         if not tag_matches:
             return False, "Task Tag not found!"
         
-        tag = tag_matches.group(1).strip().upper()
+        tag = tag_matches.group(1).strip().title()
 
         # return extracted tag
         return True, tag

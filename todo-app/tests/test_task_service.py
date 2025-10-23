@@ -33,7 +33,7 @@ def test_wrong_tag_filter():
     assert tasks == []
 
 def test_time_filter():
-    time_filters = ["", "2025-10-12", 'yesterday']
+    time_filters = ["", "2025-10-23", 'yesterday', '21/10/2025']
     status, message, tasks = task_service.time_filter(time_filters)
     assert status is True
     assert message == ''

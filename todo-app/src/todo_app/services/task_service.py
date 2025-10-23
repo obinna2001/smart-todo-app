@@ -42,10 +42,10 @@ class TaskService:
 
             if not search_result:
                 # return an error message is no task has the keyword
-                return False, f"No search result found for {keyword}", []
+                return False, f"No search result found for {' '.join(keyword)}", []
 
             # keyword search successful. Return result
-            return True, "", search_result
+            return True, f"Found {len(search_result)} with {' '.join(keyword)}", search_result
 
         # catch and return error
         except Exception as e:
@@ -67,7 +67,7 @@ class TaskService:
 
         # check if it's empty
         if not todo_records:
-            return False, "No record found - memory is Empty", []
+            return False, "No record found - Memory is Empty", []
 
         # create a valid regex filter string from tag_list and tag filter
         filter_string = "|".join(tag_list)
@@ -83,7 +83,7 @@ class TaskService:
                     filter_result.append(task)
 
             if not filter_result:
-                return False, f"No search result found for {tag_list}", []
+                return False, f"No search result found for {' '.join(tag_list)}", []
 
             # return True and result if task is found
             return True, "", filter_result   
@@ -139,7 +139,7 @@ class TaskService:
                     filter_result.append(task)
 
             if not filter_result:
-                return False, f"No search result found for {time_list}", []
+                return False, f"No search result found for {' '.join(time_list)}", []
 
             # return True and result if task is found
             return True, '', filter_result

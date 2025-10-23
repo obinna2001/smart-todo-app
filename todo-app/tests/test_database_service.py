@@ -18,14 +18,6 @@ def test_upload_task():
     assert isinstance(tasks, list)
     assert all(isinstance(task, dict) for task in tasks)
 
-def test_display_tasks_by_index():
-    index = [0, 1, 2]
-    status, message, task = db_service.display_tasks(index)
-    assert status is True
-    assert message == ''
-    assert isinstance(task, list)
-    assert all(isinstance(task, dict) for task in task)
-
 def test_display_tasks_by_id():
     task_ids = ['76487gtd']
     status, message, task = db_service.display_tasks(task_ids)
@@ -41,13 +33,6 @@ def test_display_tasks_by_all():
     assert message == ''
     assert isinstance(task, list)
     assert all(isinstance(task, dict) for task in task)
-
-def test_display_tasks_invalid_index():
-    index = [100000000, 300000000000]
-    status, message, task = db_service.display_tasks(index)
-    assert status is False
-    assert message == f'No matching tasks found for {index}.'
-    assert task == []
 
 def test_display_tasks_invalid_id():
     task_ids = ['nmdhs87g', 'kifs73hd']
