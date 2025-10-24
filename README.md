@@ -19,8 +19,6 @@ interface.</h4>
 <h4 style="font-family: Georgia, serif;">Clone TaskMate repository using the git clone command and navigate to the project root folder using the cd command</h4>
 ```powershell
 git clone https://github.com/obinna2001/smart-todo-app.git
-```
-```powershell
 cd todo-app
 ```
 <h3 style="font-family: Georgia, serif;">Install Project Dependencies with Poetry</h3>
