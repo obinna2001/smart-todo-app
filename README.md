@@ -1,1 +1,1 @@
-#                                                                                                                                                            **Organize and Prioritize: A simple Command Line todo app for managing your tasks**
+# **Organize and Prioritize: A Simple CLI Todo App**
