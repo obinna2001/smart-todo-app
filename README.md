@@ -17,15 +17,19 @@ interface.</h4>
 <div align='left'><h2 style="font-family: Georgia, serif;">Installation</h2></div>
 <h3 style="font-family: Georgia, serif;">Clone the Repository</h3>
 <h4 style="font-family: Georgia, serif;">Clone TaskMate repository using the git clone command and navigate to the project root folder using the cd command</h4>
-```ps
-git clone 
+```powershell
+git clone https://github.com/obinna2001/smart-todo-app.git
+```
+```powershell
 cd todo-app
 ```
 <h3 style="font-family: Georgia, serif;">Install Project Dependencies with Poetry</h3>
 <h4 style="font-family: Georgia, serif;">If you don’t already have Poetry installed on your system, you can also visit the official installation page - <a href="https://github.com/python-poetry/install.python-poetry.org"><h4 style="font-family: Georgia, serif;">Poetry Documentation</h4></a></h4>
 <h4 style="font-family: Georgia, serif;">After installing poetry on your system; run the following commands to install and activate TaskMate dependencies</h4>
-```ps
+```powershell
 poetry install 
+```
+```powershell
 poetry env activate
 ```
 
