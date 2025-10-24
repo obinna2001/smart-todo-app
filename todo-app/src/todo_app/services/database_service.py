@@ -38,10 +38,6 @@ class DatabaseService:
         # read todo-app.json
         json_tasks = self.read_json()
 
-        # # check for empty task_id
-        # if not task_id:
-        #     return False, "Task id is empty"
-
         # extract all the task ID into a list
         task_ids = [task.get("ID") for task in json_tasks]
 
@@ -58,7 +54,13 @@ class DatabaseService:
                 (True | False, success message | error message, list of uploaded task | empty list)
         """
         todo_records = self.read_json()
+        
+        # duplicate check
+        if any(task['Description'] == data['Description'] for task in todo_records):
+            return True, f"Task Description - {data['Description']} already exist", []
+        
         todo_records.append(data)
+        
         try:
             with open(JSON_DB_PATH, "w") as db:
                 json.dump(todo_records, db, indent=4)
@@ -67,6 +69,29 @@ class DatabaseService:
     
         except Exception as e:
             return False, str(e), []
+        
+    def delete_all_tasks(self) -> Tuple[bool, str]:
+        """Delete one or more tasks based on task ID.
+            args:
+                index: list of task index which are either valid task id or 'all'
+            return:
+                (bool, list | str):
+                    - (True | False,  success message | warning message)
+        """
+        todo_records = self.read_json()
+
+        if not todo_records:
+            return False, "No record found - Mermory is Empty"
+
+        # delete all records
+        task_count = len(todo_records)
+        todo_records.clear()
+
+        # update the cleared todo-app.json
+        self._save_json(todo_records)
+
+        # return status message
+        return True, f"Delete successful - all {task_count} task(s) cleared"        
 
 
     def delete_tasks(self, index: List[str]) -> Tuple[bool, str]:
@@ -80,23 +105,10 @@ class DatabaseService:
         todo_records = self.read_json()
 
         if not todo_records:
-            return "No record found - mermory is Empty"
+            return True, "No record found - Mermory is Empty"
 
         deleted_task: List[Union[str, int]] = []
         not_found_task: List[Union[str, int]] = []
-
-        # delete all records if 'all' is in index
-        if any(idx.strip().lower() == "all" for idx in index):
-            task_count = len(todo_records)
-
-            # delete all records
-            todo_records.clear()
-
-            # update the cleared todo-app.json
-            self._save_json(todo_records)
-
-            # return status message
-            return f"Delete successful - all {task_count} task(s) cleared"
 
         # delete record based task id
         for id in index:
@@ -124,7 +136,24 @@ class DatabaseService:
         elif deleted_task:
             return  True, f"Deleted {len(deleted_task)} task(s) successfully."
         else:
-            return True, f"No matching tasks found for {' '.join(index)}."
+            return False, f"No matching tasks found for {' '.join(index)}."
+        
+    def display_all_tasks(self) -> Tuple[bool, str, List[Any]]:
+        """To display all tasks in the todo app.
+               args:
+                   None
+               return:
+                    (bool, str, List[Any]):
+                        - (True | False,  success message | warning message, List of tasks | empty list)
+        """
+        # read todo-app.json
+        todo_records = self.read_json()
+
+        # check if todo_records is empty
+        if not todo_records:
+            return False, "No record found - Memory is Empty", []
+            
+        return True, "", todo_records
 
 
     def display_tasks(
@@ -142,19 +171,11 @@ class DatabaseService:
 
         # check if todo_records is empty
         if not todo_records:
-            return False, "No record found - Memory is Empty", []
+            return True, "No record found - Memory is Empty", []
 
         # initialize list to store extracted task and track task not found
         to_display: List[Dict[str, Any]] = []
         not_found: List[Union[str, int]] = []
-
-        # Display all task in todo record if index is 'all'
-        if any(item.strip().lower() == "all" for item in index):
-            for task in todo_records:
-                to_display.append(task)
-            
-            self._save_json(todo_records)
-            return True, "", to_display
 
         # Handle task id based index
         for id in index:
@@ -325,49 +346,6 @@ class DatabaseService:
 
         # return success message
         return True, f"{task_id} Email update successful"
-
-
-    # def update_tag(self, update_values: str) -> Tuple[bool, str]:
-    #     """To update the tag of an existing task based on task id.
-    #         args:
-    #             update_values: The new task values; format = task id task key: task value. E.g 7d588667 market
-    #         return:
-    #             (bool, str):
-    #                 - (True | False,  success message | error message)
-    #     """
-    #     # extract task id
-    #     extract_id = self.extractor.extract_taskid(update_values)
-
-    #     # validate task id
-    #     status, result = self._validate_taskid(extract_id)
-    #     if not status:
-    #         return status, result  # status == False
-
-    #     task_id = extract_id
-
-    #     # extract tag
-    #     tag_match = UPDATE_PATTERN.search(update_values)
-
-    #     # check if tag value is given
-    #     if not tag_match:
-    #         return False, "Tag value is empty."
-
-    #     tag = tag_match.group(1).strip().upper()
-
-    #     # open todo-app.json to update decription
-    #     todo_records = self.read_json()
-
-    #     # update tag of task with task_id
-    #     for task in todo_records:
-    #         if task_id == task.get("ID"):
-    #             task["Tag"] = tag
-
-    #     # save update
-    #     self._save_json(todo_records)
-
-    #     # return success message
-    #     return True, f"{task_id} Tag update successful"
-
 
     def update_priority(self, update_values: str) -> Tuple[bool, str]:
         """To update the priority of an existing task based on task id.
