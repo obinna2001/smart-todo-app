@@ -91,6 +91,7 @@ def delete_tasks(
     
     # if --id argument is used 
     status, message = todo_app.delete_task(indices)
+    
     if not status:
         return print(f"[bold red]Error:[/bold red] {message}")
     
@@ -104,7 +105,7 @@ def delete_tasks(
 
 @app.command(help="Display saved activites in TaskMate", name="display")
 def display_tasks(
-    indices: Optional[List[str]] = 
+    indices: Optional[str] = 
         typer.Option(
             None,
             "--id",
@@ -140,12 +141,8 @@ def display_tasks(
         return console.print(DISPLAY_TABLE)  # display output
         
     # if --id argument is used  
-    # unpack indices from a nested list to a list 
-    index_values = []
-    for list_ in indices:
-        index_values.extend(list_)
+    status, message, result = todo_app.display_task(indices)
     
-    status, message, result = todo_app.display_task(index_values)
     # No record found for user input
     if not status:
         return print(f"[bold red]Error:[/bold red] {message}")
@@ -272,21 +269,21 @@ def search_task(
     
 @app.command(name='list', help="Filter task in TaskMate by Priority levels, Tags and Time/date")
 def filter_task(
-    tag : Optional[List[str]] = 
+    tag : Optional[str] = 
     typer.Option(
         None,
         "--tag",
         parser=parse_options,
         help="Filter saved tasks based on Tag value Example school, religion etc"
     ),
-    priority: Optional[List[str]] = 
+    priority: Optional[str] = 
     typer.Option(
         None,
         "--priority",
         parser=parse_options,
         help="Filter saved tasks based on Priority levels; High, Mild and Low"
     ),
-    due: Optional[List[str]] = 
+    due: Optional[str] = 
     typer.Option(
         None,
         "--due",
@@ -295,7 +292,7 @@ def filter_task(
         parser=parse_options,
         help="Filter saved tasks based on due date or time example 10/02/2024, tomorrow, today, 3pm etc"
     ), 
-    status_: Optional[List[str]] = 
+    status_: Optional[str] = 
     typer.Option(
         None,
         "--status",
@@ -305,28 +302,16 @@ def filter_task(
 ):
     
     if tag:
-        tags = []  # empty string to store input values
-        for value in tag:
-            tags.extend(value)
-        status, message, result = todo_app.task_tag_filter(tags)
+        status, message, result = todo_app.task_tag_filter(tag)
           
-    elif priority:
-        priorities = []  # empty string to store input values
-        for value in priority:
-            priorities.extend(value)           
-        status, message, result = todo_app.task_priority_filter(priorities)
+    elif priority:         
+        status, message, result = todo_app.task_priority_filter(priority)
         
-    elif status_:
-        task_status = []  # empty string to store input values
-        for value in status_:
-            task_status.extend(value)           
-        status, message, result = todo_app.task_status_filter(task_status)     
+    elif status_:      
+        status, message, result = todo_app.task_status_filter(status_)     
            
-    else:
-        dates = []  # empty string to store input values
-        for value in due:
-            dates.extend(value)                 
-        status, message, result = todo_app.task_time_filter(dates)
+    else:        
+        status, message, result = todo_app.task_time_filter(due)
         
     # failed filter query    
     if not status:

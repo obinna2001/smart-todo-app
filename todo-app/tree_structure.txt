@@ -1,0 +1,37 @@
+todo-app                         
+├─ database                      
+│  └─ todo-app.json         # JSON storage         
+├─ src                           
+│  └─ todo_app                   
+│     ├─ cli_interface           
+│     │  ├─ cli_app.py       # CLI commands (Typer and Rich app)      
+│     │  ├─ cli_helper.py        
+│     │  └─ __init__.py          
+│     ├─ models                  
+│     │  ├─ app.py            # TaskMate app     
+│     │  └─ __init__.py          
+│     ├─ parsers                 
+│     │  ├─ extractor.py      # TaskMate Extraction/parser feature  
+│     │  ├─ validator.py      # TaskMate Validator feature   
+│     │  └─ __init__.py          
+│     ├─ services                
+│     │  ├─ database_service.py   # TaskMate CRUD feature
+│     │  ├─ task_service.py       # TaskMate search and filter feature
+│     │  └─ __init__.py          
+│     ├─ utilis                  
+│     │  └─ utils.py      # Helper feature
+│     ├─ config.py        # JSON DB config     
+│     ├─ main.py          # TaskMate entry point           
+│     └─ __init__.py             
+├─ tests                   # Unit test (pytest)      
+│  ├─ test_app.py                
+│  ├─ test_database_service.py   
+│  ├─ test_extractor.py          
+│  ├─ test_task_service.py       
+│  ├─ test_validator.py          
+│  └─ __init__.py                
+├─ poetry.lock                   
+├─ pyproject.toml      # poetry configuration file          
+└─ README.md                     
+
+
