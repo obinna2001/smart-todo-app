@@ -82,8 +82,23 @@ poetry run taskmate display --help
 
 <h2 style="font-family: Georgia, serif;">Built with</h2>
 <ul>
-  <li><h4 style="font-family: Georgia, serif;">Python</h4></li>
-  <li><h4 style="font-family: Georgia, serif;">Typer/h4></li>
-  <li><h4 style="font-family: Georgia, serif;">Rich/h4></li>
-  <li><h4 style="font-family: Georgia, serif;">Pytest/h4></li>
+  <li><h4 style="font-family: Georgia, serif;">Python 3.10+ </li>
+  <li><h4 style="font-family: Georgia, serif;">Typer - for CLI interface</li>
+  <li><h4 style="font-family: Georgia, serif;">Rich - for console formatting</li>
+  <li><h4 style="font-family: Georgia, serif;">Poetry - for packaging and dependency management</li> 
+  <li><h4 style="font-family: Georgia, serif;">Pytest - for feature testing</li>
 </ul>
+
+<h2 style="font-family: Georgia, serif;">Further Improvement</h2>
+<ul>
+  <li><h4 style="font-family: Georgia, serif;">Add deadline reminders and task scheduling via integration with AI Agents</li>
+  <li><h4 style="font-family: Georgia, serif;">Integrate with an online sync API or database</li>
+  <li><h4 style="font-family: Georgia, serif;">Add JSON/CSV export options</li>
+</ul>
+
+<h2 style="font-family: Georgia, serif;">Author</h2>
+<h3 style="font-family: Georgia, serif;">Okey Obinna</h3
+<h3 style="font-family: Georgia, serif;"><a href=www.linkedin.com/in/obinna-okey-81a853229> LinkedIn Profile</a></h3>
+                                                      
+
+
