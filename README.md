@@ -20,8 +20,7 @@ interface.</h4>
 <img width="965" height="45" alt="git clone" src="https://github.com/user-attachments/assets/15e9ebce-3d46-480d-b291-d21213b35b30" />
 <img width="192" height="37" alt="cd command" src="https://github.com/user-attachments/assets/e3c724fc-aaf1-4409-a2df-0b72cd21afec" />
 <h3 style="font-family: Georgia, serif;">Install Project Dependencies with Poetry</h3>
-<h4 style="font-family: Georgia, serif;">If you don’t already have Poetry installed on your system, you can also visit the official installation page below.</h4>
-<a href="https://github.com/python-poetry/install.python-poetry.org"><h4 style="font-family: Georgia, serif;">Poetry Documentation</h4></a>
+<h4 style="font-family: Georgia, serif;">If you don’t already have Poetry installed on your system, you can also visit the official installation page - <a href="https://github.com/python-poetry/install.python-poetry.org"><h4 style="font-family: Georgia, serif;">Poetry Documentation</h4></a></h4>
 <h4 style="font-family: Georgia, serif;">After installing poetry on your system; run the following commands to install and activate TaskMate dependencies</h4>
 <img width="244" height="40" alt="poetry install" src="https://github.com/user-attachments/assets/110d67a4-70b6-4572-9d3a-79ff7713fd21" />
 <img width="334" height="35" alt="poetry install 2" src="https://github.com/user-attachments/assets/68c381c2-c522-48e3-b495-464c96b58f46" />
