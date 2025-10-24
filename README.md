@@ -33,8 +33,8 @@ cd todo-app
   <a href="https://github.com/python-poetry/install.python-poetry.org" style="font-family: Georgia, serif;">
     Poetry Documentation
   </a>
+ After installing Poetry on your system, run the following commands to install and activate TaskMate dependencies 
 </h4>
-<h4 style="font-family: Georgia, serif;">After installing poetry on your system; run the following commands to install and activate TaskMate dependencies</h4>
 
 ```powershell
 poetry install 
@@ -61,6 +61,21 @@ poetry run taskmate display --help
 ```powershell
 poetry run taskmate add "Buying groceries @shopping #high due: tomorrow assigned: johndoe34@gmail.com
 ```
+<h3 style="font-family: Georgia, serif;">Delete a task</h3>
+<h4 style="font-family: Georgia, serif;">To delete saved tasks in TaskMate, use one of the following command options</h4>
+<ul>
+  <li><h4 style="font-family: Georgia, serif;">Deletes all previously saved tasks. --all</h4></li>
+  <li><h4 style="font-family: Georgia, serif;">For multiple deletions, separate each ID with a space and enclose each ID in single (') or double (") quotes. --id</h4></li>
+</ul>
 
+```powershell
+poetry run taskmate delete --id "52932284"
+```
 
+```powershell
+poetry run taskmate delete --id '52932284'
+```
 
+```powershell
+poetry run taskmate delete --id "52932284 0f93a0e2 133990b1"
+```
