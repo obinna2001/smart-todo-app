@@ -46,7 +46,7 @@ class TodoApp:
 
         # create a unique task id and status
         task_id = generate_taskID(user_input)
-        status = "Incomplete 🟩⬜⬜⬜⬜"
+        status = "Incomplete"
 
         # create task
         task = {
@@ -62,25 +62,47 @@ class TodoApp:
         # save task to todo-app.json
         return self.db_service.upload_task(task)
 
-    def delete_task(self, index: List[Union[int, str]]) -> str:
-        """Delete one or more tasks based on index, task ID or 'all'.
+    def delete_task(self, index: List[str]) -> Tuple[bool, str]:
+        """Delete one or more tasks based on task IDs.
         args:
-            index: list of task index which are either valid task id, task index or 'all'
+            index: list of task index which are either valid task id 
         return:
-            status_message: The status message of deletion process
+            (bool, list | str):
+                - (True | False,  success message | error message)
         """
         return self.db_service.delete_tasks(index)
-
-    def display_task(self, index: List[Union[int, str]]) -> Tuple[bool, str, List[Any]]:
-        """Delete one or more tasks based on index, task ID or 'all'.
+    
+    def delete_all_task(self) -> Tuple[bool, str]:
+        """Delete all tasks.
         args:
-            index: list of task index which are either valid task id, task index or 'all'
+            None
+        return:
+            (bool, list | str):
+                - (True | False,  success message | warning message)
+        """
+        return self.db_service.delete_all_tasks()        
+        
+
+    def display_task(self, index: List[str]) -> Tuple[bool, str, List[Any]]:
+        """Display one or more tasks based on task IDs.
+        args:
+            index: list of task index which are either valid task id
         return:
             (bool, str, List[Any]):
                 - (True | False,  success message | error message, List of tasks | empty list)
         """
         return self.db_service.display_tasks(index)
 
+    def display_all_task(self) -> Tuple[bool, str, List[Any]]:
+        """Delete one or more tasks based on task ID or 'all'.
+        args:
+            None
+        return:
+            (bool, str, List[Any]):
+                - (True | False,  success message | warnin message, List of tasks | empty list)
+        """
+        return self.db_service.display_all_tasks()
+    
     def update_task_description(self, update_values: str) -> Tuple[bool, str]:
         """ "To update the description of an existing task based on the task id.
         args:
@@ -121,16 +143,6 @@ class TodoApp:
         """
         return self.db_service.update_priority(update_values)
 
-    def update_task_tag(self, update_values: str) -> Tuple[bool, str]:
-        """ "To update the tag of an existing task based on the task id.
-        args:
-            update_values: The new task values; format = task id task key task value. E.g '9d30d4ab school'
-        return:
-            (bool, list | str):
-                - (True | False,  success message | error message)
-        """
-        return self.db_service.update_tag(update_values)
-
     def update_task_status(self, update_values: str) -> Tuple[bool, str]:
         """ "To update the status of an existing task based on the task id.
         args:
@@ -164,7 +176,7 @@ class TodoApp:
     def task_time_filter(self, time_filters_list: List[str]) -> Tuple[bool, str, List[Any]]:
         """Search and extract task from todo-app.json based on time filters.
         args:
-            tag_list: List containing time filters example ['yesterday', '2 weeks']
+            time_filters_list: List containing time filters example ['yesterday', '2 weeks']
         return:
             (bool, str, List[Any]):
                 - (True | False,  empty string| error message, List of filter result | empty list)
@@ -174,9 +186,19 @@ class TodoApp:
     def task_priority_filter(self, priority_filters_list: List[str]) -> Tuple[bool, str, List[Any]]:
         """Search and extract task from todo-app.json based on priority filters.
         args:
-            tag_list: List containing priority filters example ['high', 'mild', 'low']
+            priority_filters_list: List containing priority filters example ['high', 'mild', 'low']
         return:
             (bool, str, List[Any]):
                 - (True | False,  empty string| error message, List of filter result | empty list)
         """
         return self.task_service.priority_filter(priority_filters_list)
+
+    def task_status_filter(self, status_filters_list: List[str]) -> Tuple[bool, str, List[Any]]:
+        """Search and extract task from todo-app.json based on status filters.
+        args:
+            status_filters_list: List containing priority filters example ['complete', 'inprogress', 'incomplete']
+        return:
+            (bool, str, List[Any]):
+                - (True | False,  empty string| error message, List of filter result | empty list)
+        """
+        return self.task_service.status_filter(status_filters_list)

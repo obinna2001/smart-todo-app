@@ -59,6 +59,6 @@ class Validator:
 
         # valid status level
         if not check:
-            return False, "Invalid or No Task Status given. Status Incomplete, Inprogress and Complete"
+            return False, "Invalid or no task status given. Valid status are; Incomplete, Inprogress and Complete"
         
         return True, "Valid Task Status"

@@ -1,8 +1,8 @@
 import re
 import hashlib
-from typing import Union, Tuple
-from dateutil.parser import parse
-from dateutil.parser import ParserError
+from typing import Union, Tuple, List, Dict, Any
+from dateutil.parser import parse # type: ignore
+from dateutil.parser import ParserError # type: ignore
 from datetime import datetime, timedelta
 import dateparser  # type: ignore
 

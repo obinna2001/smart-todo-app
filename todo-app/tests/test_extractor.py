@@ -37,7 +37,7 @@ def test_tag_extraction():
     sample = "buy groceries @shopping #mild due:8pm assigned:okeyobinna2001@gmail.com"
     status, tag = app.extract_tag(sample)
     assert status is True
-    assert tag == "SHOPPING"
+    assert tag == "Shopping"
 
 def test_missing_tag_input_extraction():
     sample = "buy groceries #high due:8pm assigned:okeyobinna2001@gmail.com"

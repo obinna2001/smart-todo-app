@@ -34,4 +34,4 @@ def test_invalid_status():
     status = "Done"
     is_valid, message = validator.valid_status(status)
     assert is_valid is False
-    assert message == "Invalid or No Task Status given. Status Incomplete, Inprogress and Complete"
+    assert message == "Invalid or no task status given. Valid status are; Incomplete, Inprogress and Complete"
