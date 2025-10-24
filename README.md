@@ -48,12 +48,7 @@ poetry env activate
 ```powershell
 poetry run taskmate --help
 ```
-<h4 style="font-family: Georgia, serif;">Further information on the available command is accessible via poetry run taskmake command --help</h4>
-<h4 style="font-family: Georgia, serif;">Example</h4>
 
-```powershell
-poetry run taskmate display --help
-```
 <div><h2 style="font-family: Georgia, serif;">TaskMate Command Sample</h2></div>
 <h3 style="font-family: Georgia, serif;">Add a task</h3>
 <h4 style="font-family: Georgia, serif;">When adding a task to TaskMate, the format observed in the sample below must be strictly adhered to. Email addresses are optional.</h4>
@@ -69,13 +64,26 @@ poetry run taskmate add "Buying groceries @shopping #high due: tomorrow assigned
 </ul>
 
 ```powershell
-poetry run taskmate delete --id "52932284"
+poetry run taskmate delete --all
 ```
-
 ```powershell
 poetry run taskmate delete --id '52932284'
 ```
-
 ```powershell
 poetry run taskmate delete --id "52932284 0f93a0e2 133990b1"
 ```
+
+<h4 style="font-family: Georgia, serif;">Further information on the available command is accessible via poetry run taskmake command --help</h4>
+<h4 style="font-family: Georgia, serif;">Example</h4>
+
+```powershell
+poetry run taskmate display --help
+```
+
+<h2 style="font-family: Georgia, serif;">Built with</h2>
+<ul>
+  <li><h4 style="font-family: Georgia, serif;">Python</h4></li>
+  <li><h4 style="font-family: Georgia, serif;">Typer/h4></li>
+  <li><h4 style="font-family: Georgia, serif;">Rich/h4></li>
+  <li><h4 style="font-family: Georgia, serif;">Pytest/h4></li>
+</ul>
