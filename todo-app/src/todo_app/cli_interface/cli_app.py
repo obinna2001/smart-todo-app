@@ -13,13 +13,18 @@ todo_app = TodoApp()
 console = Console()
 
 # creating the display table for rich output
-DISPLAY_TABLE = Table(box=box.SQUARE)
-DISPLAY_TABLE.add_column("ID", no_wrap=True)
-DISPLAY_TABLE.add_column("Description", no_wrap=True)
-DISPLAY_TABLE.add_column("Tag", no_wrap=True)
-DISPLAY_TABLE.add_column("Priority", no_wrap=True)
-DISPLAY_TABLE.add_column("Time", no_wrap=True)    
-DISPLAY_TABLE.add_column("Status", no_wrap=True)
+DISPLAY_TABLE = Table(box=box.SQUARE, expand=True)
+
+DISPLAY_TABLE.row_styles = ["grey93", "grey74"]
+DISPLAY_TABLE.header_styles = "bold white on grey23"
+
+DISPLAY_TABLE.add_column("ID", no_wrap=True, style="grey93")
+DISPLAY_TABLE.add_column("Description", no_wrap=True, style="grey93")
+DISPLAY_TABLE.add_column("Tag", no_wrap=True, style="grey93")
+DISPLAY_TABLE.add_column("Priority", no_wrap=True, style="grey93")
+DISPLAY_TABLE.add_column("Time", no_wrap=True, style="cyan")    
+DISPLAY_TABLE.add_column("Status", no_wrap=True, style="grey93")
+DISPLAY_TABLE.add_column("Email", no_wrap=True, style="grey93")
 
 
 @app.command(help="Add a new activity to TaskMate", name="add")
@@ -51,7 +56,8 @@ def add_task(
         result[0]['Tag'],
         result[0]['Priority'],
         result[0]['Time'],
-        result[0]['Status']  
+        result[0]['Status'],
+        result[0]['Email']
     )
     
     console.print(DISPLAY_TABLE)
@@ -127,7 +133,8 @@ def display_tasks(
                 task['Tag'],
                 task['Priority'],
                 task['Time'],
-                task['Status']  
+                task['Status'],
+                task['Email']  
             )
             
         return console.print(DISPLAY_TABLE)  # display output
@@ -157,7 +164,8 @@ def display_tasks(
                 task['Tag'],
                 task['Priority'],
                 task['Time'],
-                task['Status']  
+                task['Status'],
+                task['Email']  
             )    
                  
     # all provided ids were retrieved
@@ -169,7 +177,8 @@ def display_tasks(
                 task['Tag'],
                 task['Priority'],
                 task['Time'],
-                task['Status']  
+                task['Status'],
+                task['Email']  
             )
     
     console.print(DISPLAY_TABLE)
@@ -255,12 +264,13 @@ def search_task(
             task['Tag'],
             task['Priority'],
             task['Time'],
-            task['Status']
+            task['Status'],
+            task['Email']
         )
     
     console.print(DISPLAY_TABLE)
     
-@app.command(name='list', help="Filter and task by Priority levels, Tags and Time/date in TaskMate run")
+@app.command(name='list', help="Filter task in TaskMate by Priority levels, Tags and Time/date")
 def filter_task(
     tag : Optional[List[str]] = 
     typer.Option(
@@ -333,7 +343,8 @@ def filter_task(
             task['Tag'],
             task['Priority'],
             task['Time'],
-            task['Status']
+            task['Status'],
+            task['Email']
         )
     
     console.print(DISPLAY_TABLE)
