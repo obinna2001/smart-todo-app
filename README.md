@@ -1,1 +1,1 @@
-Organize and Prioritize: A simple to-do app for managing your tasks
+**Organize and Prioritize: A simple to-do app for managing your tasks**
