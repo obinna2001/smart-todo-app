@@ -27,4 +27,4 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-taskmate = "todo_app.cli_interface.cli_app:app"
+taskmate = "todo_app.main:app"

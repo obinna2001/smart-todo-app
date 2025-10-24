@@ -26,7 +26,7 @@ def test_display_all_tasks():
     assert all(isinstance(task, dict) for task in task)
 
 def test_display_tasks():
-    task_ids = ["f7d92f3b"]
+    task_ids = ["133990b1"]
     status, message, task = db_service.display_tasks(task_ids)
     assert status is True
     assert message == ''
@@ -41,7 +41,7 @@ def test_display_tasks_invalid_id():
     assert task == []
 
 def test_display_mixed_id():
-    task_ids = ['nmdhs87g', 'kifs73hd', "f7d92f3b"]
+    task_ids = ['nmdhs87g', 'kifs73hd', "133990b1"]
     status, message, task = db_service.display_tasks(task_ids)
     assert status is True
     assert isinstance(message, str)
@@ -49,7 +49,7 @@ def test_display_mixed_id():
     assert all(isinstance(task, dict) for task in task)  
 
 def test_update_description():
-    task_id = 'f7d92f3b'
+    task_id = "133990b1"
     update_values = f'{task_id} Updated test task'
     status, message = db_service.update_description(update_values)
     assert status is True

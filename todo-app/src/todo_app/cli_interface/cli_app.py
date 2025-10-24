@@ -59,11 +59,11 @@ def add_task(
 
 @app.command(help="Delete saved activites in TaskMate", name="delete")
 def delete_tasks(
-    all_input: Optional[str] =
+    all_input: bool =
         typer.Option(
-            None,
+            False,
             '--all',
-            help="Delete all task or activities in TaskMate using 'delete -all .' command "
+            help="Delete all task or activities in TaskMate using 'delete -all ' command "
         ),
     indices: Optional[str] = 
         typer.Option(
@@ -106,9 +106,9 @@ def display_tasks(
             help="List of task IDs to display specific tasks. Example: '011e00e8' 'f981351e'" 
         ),
         
-    all_input: Optional[str] = 
+    all_input: bool = 
         typer.Option(
-            None,
+            False,
             "--all",
             help='Display all avaliable task',
         )        
@@ -337,7 +337,3 @@ def filter_task(
         )
     
     console.print(DISPLAY_TABLE)
-    
-    
-if __name__ == "__main__":
-    app()
