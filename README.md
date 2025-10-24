@@ -25,19 +25,21 @@ interface.</h4>
 git clone https://github.com/obinna2001/smart-todo-app.git
 cd todo-app
 ```
-
+```powershell
+cd todo-app
+```
 <h3 style="font-family: Georgia, serif;">Install Project Dependencies with Poetry</h3>
-<h4 style="font-family: Georgia, serif;">If you don’t already have Poetry installed on your system, you can also visit the official installation page - <a href="https://github.com/python-poetry/install.python-poetry.org"><h4 style="font-family: Georgia, serif;">Poetry Documentation</a></h4>
+<h4 style="font-family: Georgia, serif;">If you don’t already have Poetry installed on your system, you can also visit the official installation page - <a href="https://github.com/python-poetry/install.python-poetry.org"><h4 style="font-family: Georgia, serif;">Poetry Documentation</a></h4></h4>
 
 <h4 style="font-family: Georgia, serif;">After installing poetry on your system; run the following commands to install and activate TaskMate dependencies</h4>
 
 ```powershell
 poetry install 
+```
+```powershell
 poetry env activate
 ```
-
 <div><h2 style="font-family: Georgia, serif;">Usage</h2></div>
-
 <h4 style="font-family: Georgia, serif;">The CLI is powered by Typer — so all commands are discoverable via;</h4>
 
 ```powershell
@@ -47,10 +49,17 @@ poetry run taskmate --help
 <h4 style="font-family: Georgia, serif;">Example</h4>
 
 ```powershell
-poetry run taskmate --help
+poetry run taskmate display --help
 ```
+<div><h2 style="font-family: Georgia, serif;">TaskMate Command Sample</h2></div>
 
+<h3 style="font-family: Georgia, serif;">Add a task</h3>
 
+<h4 style="font-family: Georgia, serif;">When adding a task to TaskMate, the format observed in the sample below must be strictly adhered to. Email addresses are optional.</h4>
+
+```powershell
+poetry run taskmate add "Buying groceries @shopping #high due: tomorrow assigned: johndoe34@gmail.com
+```
 
 
 
