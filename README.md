@@ -20,7 +20,6 @@ TaskMate allows you to create, update, view, search, and delete your daily tasks
 
 ```powershell
 git clone https://github.com/obinna2001/smart-todo-app.git
-cd todo-app
 ```
 ```powershell
 cd todo-app
